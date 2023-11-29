@@ -12,7 +12,7 @@
 
 词云展示：来自CVPR2023和ICCV2023的论文标题数据
 
-![CV2023WordCloud](assets/ALL CV2023 Word Cloud.jpg)
+![CV2023WordCloud](assets/ALLCV2023WordCloud.jpg)
 
 
 
