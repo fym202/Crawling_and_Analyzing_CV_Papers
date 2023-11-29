@@ -76,18 +76,9 @@ num_threads = 8    											# 进程数
 | statistics_root |  统计数据存放的位置  | 保存两个excel表格，分别是会议的全部论文表和当前主题论文表，statistics_root是这两张表存放的文件夹，默认是root下的statistics文件夹 |
 |   num_threads   |       进程数量       |       默认设置8个进程，实际使用中多进程爬完电脑容易卡        |
 
-下面是论文连接的样例列表，根据想下载的会议去选择对应链接和会议名
-
-```
-ICCV: https://openaccess.thecvf.com/ICCV2023?day=all (ICCV 2023)
-CVPR: https://openaccess.thecvf.com/CVPR2021?day=all (CVPR 2021)
-ECCV: https://www.ecva.net/papers.php (ECCV 2020) (changed in 2020)
-CVPR: https://openaccess.thecvf.com/CVPR2020 (CVPR before 2020)
-NIPS: https://papers.nips.cc/paper/2020 (NeurIPS 2020)
-ICML: http://proceedings.mlr.press/v119/ (ICML 2020)
-ICLR: https://openreview.net/group?id=ICLR.cc/2021/Conference (ICLR 2021)
-```
 如果想要爬取其他网站，需要在`retrieve_titles_urls_from_websites.py`写一个检索函数，这个函数需要返回论文题目和论文url链接。
+
+下面是论文连接的样例列表，根据想下载的会议去选择对应链接和会议名，同时年份也要保持正确。
 
 ### NIPS会议链接
 
