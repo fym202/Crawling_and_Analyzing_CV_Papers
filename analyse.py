@@ -123,20 +123,52 @@ def generate_wordcloud(word_count, save_root, wordcloud_filename):
     plt.show()
 
 
+# 生成直方图
+def generate_frequency_bar(word_frequency, show_num=20):
+    word_freq = np.array(list(word_frequency.items()))[:show_num]
+    words_x = word_freq[:, 0]
+    freq_y = word_freq[:, 1].astype(int)
+    # plot
+    fig, ax = plt.subplots(figsize=(15, 10))
+
+    # 条形图
+    ax.bar(words_x, freq_y, width=1, edgecolor="white", linewidth=0.7)
+    # 添加注释
+    for a, b in zip(range(len(words_x)), freq_y):
+        plt.text(a, b + 5, b, ha='center', va='bottom')
+    ax.set(xlim=(-1, show_num), xticks=words_x)
+    fig.autofmt_xdate()         # 自动旋转xlabel
+    ax.set_title(f"Top {show_num} Frequency Word")
+
+
+# 进行词频统计，绘图以及保存
+def count_word_frequency(paper_list_roots, stop_words_root, save_root,
+                         frequencies_filename, wordcloud_filename,
+                         plot_wordcloud=True):
+    # 进行词频统计
+    frequency = paper_title_word_frequency(paper_list_roots, stop_words_root)
+    # 保存词频到excel中
+    save_word_frequency(frequency, save_root, frequencies_filename)
+    # 绘制直方图
+    generate_frequency_bar(frequency, 20)
+    # 绘制词云图
+    if plot_wordcloud:
+        generate_wordcloud(frequency, save_root, wordcloud_filename)
+
+
+
 if __name__ == '__main__':
     paper_list_roots = ["D:\Papers\ECCV2022_Detect\statistics\eccv2022_all.xlsx",
                        "D:\Papers\CVPR2022_Detect\statistics\cvpr2022_all.xlsx"]          # 根目录
-    stop_words_root = "./supports/stop_words.txt"           # 停止词, 没有可以不填
-    save_root = "D:\Papers\statistics"                      # 词频和图片保存路径
+    # parameters for 词频统计
+    stop_words_root = "./supports/stop_words.txt"               # 停止词, 没有可以不填
+    save_root = "D:\Papers\statistics"                          # 词频和图片保存路径
     frequencies_filename = "ALL_CV2022WordFrequency.xlsx"       # 保存词频的文件名
-    wordcloud_filename = "ALL CV2022 Word Cloud"                # 保存词云图的文件名
-    # 进行词频统计
-    frequency = paper_title_word_frequency(paper_list_roots, stop_words_root)
-    print("\nTop 50 high-frequency words in paper titles.\n")
-    print(list(frequency.items())[:50])
-    # 保存词频到excel中
-    save_word_frequency(frequency, save_root, frequencies_filename)
-    # 绘制词云图
-    generate_wordcloud(frequency, save_root, wordcloud_filename)
+    wordcloud_filename = "ALL_CV2022_Word_Cloud"                # 保存词云图的文件名
+
+    # 统计词频并绘图
+    count_word_frequency(paper_list_roots, stop_words_root, save_root,
+                         frequencies_filename, wordcloud_filename)
+
 
 
